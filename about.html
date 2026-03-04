@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — Command Center</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0f172a;
+      --surface:   #1e293b;
+      --border:    #334155;
+      --muted:     #94a3b8;
+      --text:      #f1f5f9;
+      --primary:   #3b82f6;
+      --primary-h: #2563eb;
+      --radius:    0.5rem;
+      --font:      'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* Navigation */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      height: 4rem;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+      font-weight: 700;
+      font-size: 1.125rem;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-brand svg { flex-shrink: 0; }
+
+    .nav-links { display: flex; gap: 0.25rem; }
+
+    .nav-links a {
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius);
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .nav-links a:hover { background: var(--border); color: var(--text); }
+    .nav-links a.active { background: var(--primary); color: #fff; }
+
+    /* Layout */
+    main {
+      max-width: 48rem;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    /* Profile Card */
+    .profile-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      text-align: center;
+    }
+
+    .avatar {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), #8b5cf6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.25rem;
+      font-size: 2.25rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .profile-card h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+    }
+
+    .profile-card .subtitle {
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-top: 0.35rem;
+    }
+
+    .profile-card .school {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-top: 0.25rem;
+    }
+
+    /* Info Cards */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+    }
+
+    .card-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .card-title svg { color: var(--primary); flex-shrink: 0; }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .info-item label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      margin-bottom: 0.2rem;
+    }
+
+    .info-item span {
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    /* Detail list */
+    .detail-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+
+    .detail-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .detail-list li svg {
+      flex-shrink: 0;
+      margin-top: 0.2rem;
+      color: var(--primary);
+    }
+
+    /* Tags */
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.25rem;
+    }
+
+    .tag {
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 0.3rem 0.75rem;
+      border-radius: 9999px;
+      background: #1e3a5f;
+      color: #93c5fd;
+    }
+
+    /* Footer */
+    .footer-note {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.8rem;
+      padding-top: 1rem;
+    }
+
+    @media (max-width: 640px) {
+      main { padding: 1.5rem 1rem; }
+      .info-grid { grid-template-columns: 1fr; }
+      .profile-card { padding: 1.5rem; }
+      nav { padding: 0 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="index.html" class="nav-brand">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+        <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+        <line x1="12" y1="22.08" x2="12" y2="12"/>
+      </svg>
+      Command Center
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Dashboard</a>
+      <a href="about.html" class="active">About</a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main>
+
+    <!-- Profile Header -->
+    <div class="profile-card">
+      <div class="avatar">N</div>
+      <h1>Nika</h1>
+      <div class="subtitle">Developer &amp; Business Strategist</div>
+      <div class="school">Simon Fraser University</div>
+    </div>
+
+    <!-- Academic Profile -->
+    <div class="card">
+      <div class="card-title">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+          <path d="M6 12v5c0 2 6 3 6 3s6-1 6-3v-5"/>
+        </svg>
+        Academic Profile
+      </div>
+      <div class="info-grid">
+        <div class="info-item">
+          <label>University</label>
+          <span>Simon Fraser University (SFU)</span>
+        </div>
+        <div class="info-item">
+          <label>Year</label>
+          <span>2nd Year</span>
+        </div>
+        <div class="info-item">
+          <label>Program</label>
+          <span>Bachelor of Business Administration</span>
+        </div>
+        <div class="info-item">
+          <label>Concentrations</label>
+          <span>Marketing &amp; MIS</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Leadership -->
+    <div class="card">
+      <div class="card-title">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+          <circle cx="9" cy="7" r="4"/>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+        Leadership &amp; Involvement
+      </div>
+      <ul class="detail-list">
+        <li>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          <span><strong>Vice President of Academics</strong> — Business Administration Student Society (BASS)</span>
+        </li>
+        <li>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          <span>Passionate about bridging the gap between business strategy and technology</span>
+        </li>
+        <li>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          <span>Focused on building practical, data-driven solutions for real-world problems</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Skills & Interests -->
+    <div class="card">
+      <div class="card-title">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="16 18 22 12 16 6"/>
+          <polyline points="8 6 2 12 8 18"/>
+        </svg>
+        Skills &amp; Interests
+      </div>
+      <div class="tags">
+        <span class="tag">Marketing Strategy</span>
+        <span class="tag">Management Information Systems</span>
+        <span class="tag">HTML / CSS / JS</span>
+        <span class="tag">Data Visualization</span>
+        <span class="tag">Business Analytics</span>
+        <span class="tag">Project Management</span>
+      </div>
+    </div>
+
+    <!-- About This Project -->
+    <div class="card">
+      <div class="card-title">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+          <line x1="8" y1="21" x2="16" y2="21"/>
+          <line x1="12" y1="17" x2="12" y2="21"/>
+        </svg>
+        About This Project
+      </div>
+      <ul class="detail-list">
+        <li>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          <span><strong>Command Center</strong> is an inventory dashboard built for Sarah, Floor Manager at ABC Logistics.</span>
+        </li>
+        <li>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          <span>Built with vanilla HTML, CSS, and JavaScript, powered by <strong>Chart.js</strong> for real-time visualization.</span>
+        </li>
+        <li>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          <span>Uses <strong>localStorage</strong> for persistent data — no backend required.</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="footer-note">
+      &copy; 2026 Nika &mdash; BUS 237 &middot; Simon Fraser University
+    </div>
+  </main>
+</body>
+</html>
